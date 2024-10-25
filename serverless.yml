@@ -1,0 +1,49 @@
+service: swapi-api
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  environment:
+    TABLE_NAME: swapi-vehicles
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:PutItem"
+        - "dynamodb:GetItem"
+        - "dynamodb:Scan"
+      Resource:
+        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.TABLE_NAME}"
+
+functions:
+  obtenerVehiculo:
+    handler: src/handlers/vehiculos.obtenerVehiculo
+    events:
+      - http:
+          path: vehiculos/{id}
+          method: get
+          cors: true
+
+  crearVehiculo:
+    handler: src/handlers/vehiculos.crearVehiculo
+    events:
+      - http:
+          path: vehiculos
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    MyDynamoDbTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: ${self:provider.environment.TABLE_NAME}
+        AttributeDefinitions:
+          - AttributeName: "id"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "id"
+            KeyType: "HASH"
+        BillingMode: PAY_PER_REQUEST
+
+plugins:
+  - serverless-plugin-typescript

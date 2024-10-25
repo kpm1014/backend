@@ -1,0 +1,43 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# Serverless
+.serverless/
+.slsignore
+
+# Env files
+.env
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Coverage directory used by testing tools
+coverage/
+
+# Jest
+jest-coverage/
+
+# MacOS
+.DS_Store
+
+# AWS credentials
+.aws/
