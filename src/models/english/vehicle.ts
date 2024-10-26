@@ -16,4 +16,3 @@ export interface Vehicle {
     edited: string;
     url: string;
 }
-  

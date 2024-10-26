@@ -51,6 +51,7 @@ export abstract class BaseService {
         if (!response.ok) {
             throw new Error(`Error fetching data: ${response.status}`);
         }
-        return response.json();
-    }
+        const data = await response.json();
+        return data as T;
+    }    
 }

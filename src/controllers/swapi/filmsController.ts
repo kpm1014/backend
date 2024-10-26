@@ -1,4 +1,4 @@
-import { BaseController } from '../baseController';
+import { BaseController } from './swapiBaseController';
 import { SwapiFilmService } from '../../services/swapi/swapiFilmService';
 
 export class FilmsController extends BaseController {

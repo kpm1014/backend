@@ -1,20 +1,21 @@
 export interface Character {
     id: string;
-    nombre: string;
-    altura: string;
-    masa: string;
-    colorCabello: string;
-    colorPiel: string;
-    colorOjos: string;
-    añoNacimiento: string;
-    genero: string;
-    mundoNatal: string;
-    peliculas: string[];
-    especies: string[];
-    vehiculos: string[];
-    navesEstelares: string[];
-    creado: string;
-    actualizado: string;
+    name: string;
+    height: string;
+    mass: string;
+    hair_color: string;
+    skin_color: string;
+    eye_color: string;
+    birth_year: string;
+    gender: string;
+    homeworld: string;
+    films: string[];
+    species: string[];
+    vehicles: string[];
+    starships: string[];
+    created: string;
+    edited: string;
 }
+
 
 export interface CharacterInput extends Omit<Character, 'id' | 'creado' | 'actualizado'> { }

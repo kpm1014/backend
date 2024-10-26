@@ -1,4 +1,4 @@
-import { BaseController } from '../../controllers/baseController';
+import { BaseController } from '../../controllers/swapi/swapiBaseController';
 import { BaseService } from '../../services/swapi/baseService';
 import { PaginatedResponse } from '../../models';
 

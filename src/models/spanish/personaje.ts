@@ -6,7 +6,7 @@ export interface Personaje {
     colorCabello: string;
     colorPiel: string;
     colorOjos: string;
-    añoNacimiento: string;
+    anhoNacimiento: string;
     genero: string;
     mundoNatal: string;
     peliculas: string[];
@@ -14,7 +14,7 @@ export interface Personaje {
     vehiculos: string[];
     navesEstelares: string[];
     creado: string;
-    actualizado: string;
+    editado: string;
 }
 
 export interface PersonajeInput extends Omit<Personaje, 'id' | 'creado' | 'actualizado'> { }

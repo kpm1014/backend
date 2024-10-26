@@ -1,5 +1,5 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { BaseController } from '../../controllers/baseController';
+import { BaseController } from '../../controllers/swapi/swapiBaseController';
 
 export const createGetResourceByIdHandler = (controller: BaseController): APIGatewayProxyHandler =>
     async (event) => {

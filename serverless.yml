@@ -3,47 +3,296 @@ service: swapi-api
 provider:
   name: aws
   runtime: nodejs18.x
+  region: us-east-1
   environment:
-    TABLE_NAME: swapi-vehicles
+    SWAPI_BASE_URL: https://swapi.py4e.com/api
+    TABLE_NAME: ${self:service}-${opt:stage, self:provider.stage}
+    STAGE: ${opt:stage, self:provider.stage}
+    REGION: ${opt:region, self:provider.region}
+    API_VERSION: v1
+    CORS_ORIGIN: "*"
   iamRoleStatements:
-    - Effect: "Allow"
+    - Effect: Allow
       Action:
-        - "dynamodb:PutItem"
-        - "dynamodb:GetItem"
-        - "dynamodb:Scan"
+        - dynamodb:PutItem
+        - dynamodb:GetItem
+        - dynamodb:Scan
+        - dynamodb:Query
       Resource:
-        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.TABLE_NAME}"
+        - arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.TABLE_NAME}
 
 functions:
-  obtenerVehiculo:
-    handler: src/handlers/vehiculos.obtenerVehiculo
+  createCharacter:
+    handler: src/functions/characters/createCharacter.handler
     events:
       - http:
-          path: vehiculos/{id}
+          path: /api/characters
+          method: post
+          cors: true
+
+  getCharacter:
+    handler: src/functions/characters/getCharacter.handler
+    events:
+      - http:
+          path: /api/characters/{id}
           method: get
           cors: true
 
-  crearVehiculo:
-    handler: src/handlers/vehiculos.crearVehiculo
+  getCharacters:
+    handler: src/functions/characters/getCharacters.handler
     events:
       - http:
-          path: vehiculos
-          method: post
+          path: /api/characters
+          method: get
+          cors: true
+
+  updateCharacter:
+    handler: src/functions/characters/updateCharacter.handler
+    events:
+      - http:
+          path: /api/characters/{id}
+          method: put
+          cors: true
+
+  deleteCharacter:
+    handler: src/functions/characters/deleteCharacter.handler
+    events:
+      - http:
+          path: /api/characters/{id}
+          method: delete
+          cors: true
+
+  getAllPeople:
+    handler: src/functions/people/index.getPeople
+    events:
+      - http:
+          path: api/people
+          method: get
+          cors: true
+
+  getPeopleById:
+    handler: src/functions/people/index.getPerson
+    events:
+      - http:
+          path: api/people/{id}
+          method: get
+          cors: true
+
+  searchPeople:
+    handler: src/functions/people/index.searchPeople
+    events:
+      - http:
+          path: api/people/search
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                query: true
+
+  getPeopleSchema:
+    handler: src/functions/people/index.getPeopleSchema
+    events:
+      - http:
+          path: api/people/schema
+          method: get
+          cors: true
+
+  getAllFilms:
+    handler: src/functions/films/index.getFilms
+    events:
+      - http:
+          path: api/films
+          method: get
+          cors: true
+
+  getFilmById:
+    handler: src/functions/films/index.getFilm
+    events:
+      - http:
+          path: api/films/{id}
+          method: get
+          cors: true
+
+  searchFilms:
+    handler: src/functions/films/index.searchFilms
+    events:
+      - http:
+          path: api/films/search
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                query: true
+
+  getFilmsSchema:
+    handler: src/functions/films/index.getFilmsSchema
+    events:
+      - http:
+          path: api/films/schema
+          method: get
+          cors: true
+
+  getAllStarships:
+    handler: src/functions/handlers/getResource.handler
+    events:
+      - http:
+          path: api/starships
+          method: get
+          cors: true
+
+  getStarshipById:
+    handler: src/functions/handlers/getResourceById.handler
+    events:
+      - http:
+          path: api/starships/{id}
+          method: get
+          cors: true
+
+  searchStarships:
+    handler: src/functions/handlers/searchResource.handler
+    events:
+      - http:
+          path: api/starships/search
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                query: true
+
+  getStarshipsSchema:
+    handler: src/functions/handlers/getSchema.handler
+    events:
+      - http:
+          path: api/starships/schema
+          method: get
+          cors: true
+
+  getAllSpecies:
+    handler: src/functions/species/index.getSpecies
+    events:
+      - http:
+          path: api/species
+          method: get
+          cors: true
+
+  getSpeciesById:
+    handler: src/functions/species/index.getSpecies
+    events:
+      - http:
+          path: api/species/{id}
+          method: get
+          cors: true
+
+  searchSpecies:
+    handler: src/functions/species/index.searchSpecies
+    events:
+      - http:
+          path: api/species/search
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                query: true
+
+  getSpeciesSchema:
+    handler: src/functions/species/index.getSpeciesSchema
+    events:
+      - http:
+          path: api/species/schema
+          method: get
+          cors: true
+
+  getAllVehicles:
+    handler: src/functions/vehicles/index.getVehicles
+    events:
+      - http:
+          path: api/vehicles
+          method: get
+          cors: true
+
+  getVehicleById:
+    handler: src/functions/vehicles/index.getVehicle
+    events:
+      - http:
+          path: api/vehicles/{id}
+          method: get
+          cors: true
+
+  searchVehicles:
+    handler: src/functions/vehicles/index.searchVehicles
+    events:
+      - http:
+          path: api/vehicles/search
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                query: true
+
+  getVehiclesSchema:
+    handler: src/functions/vehicles/index.getVehiclesSchema
+    events:
+      - http:
+          path: api/vehicles/schema
+          method: get
+          cors: true
+
+  getAllPlanets:
+    handler: src/functions/planets/index.getPlanets
+    events:
+      - http:
+          path: api/planets
+          method: get
+          cors: true
+
+  getPlanetById:
+    handler: src/functions/planets/index.getPlanet
+    events:
+      - http:
+          path: api/planets/{id}
+          method: get
+          cors: true
+
+  searchPlanets:
+    handler: src/functions/planets/index.searchPlanets
+    events:
+      - http:
+          path: api/planets/search
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                query: true
+
+  getPlanetsSchema:
+    handler: src/functions/planets/index.getPlanetsSchema
+    events:
+      - http:
+          path: api/planets/schema
+          method: get
           cors: true
 
 resources:
   Resources:
-    MyDynamoDbTable:
-      Type: "AWS::DynamoDB::Table"
+    SwapiTable:
+      Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${self:provider.environment.TABLE_NAME}
         AttributeDefinitions:
-          - AttributeName: "id"
-            AttributeType: "S"
+          - AttributeName: id
+            AttributeType: S
         KeySchema:
-          - AttributeName: "id"
-            KeyType: "HASH"
+          - AttributeName: id
+            KeyType: HASH
         BillingMode: PAY_PER_REQUEST
 
 plugins:
   - serverless-plugin-typescript
+  - serverless-offline
+  - serverless-openapi-documentation

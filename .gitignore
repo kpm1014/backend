@@ -41,3 +41,7 @@ jest-coverage/
 
 # AWS credentials
 .aws/
+
+# Serverless
+.build/
+dist/

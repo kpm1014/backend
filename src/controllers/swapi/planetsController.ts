@@ -1,4 +1,4 @@
-import { BaseController } from '../baseController';
+import { BaseController } from './swapiBaseController';
 import { SwapiPlanetService } from '../../services/swapi/swapiPlanetService';
 
 export class PlanetsController extends BaseController {

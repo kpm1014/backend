@@ -1,47 +1,43 @@
-import { APIGatewayProxyHandler } from '../../types';
-import { DynamoDBService } from '../../services/dynamodb/dynamodbService';
+import { APIGatewayProxyHandler } from 'aws-lambda';
+import { CharacterService } from '../../services/characterService';
+import { APIResponse } from '../../models/response';
+
+const characterService = new CharacterService();
 
 export const handler: APIGatewayProxyHandler = async (event) => {
     try {
-        const dynamoDb = new DynamoDBService();
         const { id } = event.pathParameters || {};
+        const personaje = await characterService.getCharacter(id!);
 
-        if (!id) {
-            const characters = await dynamoDb.getAllCharacters();
-            return {
-                statusCode: 200,
-                body: JSON.stringify({
-                    exito: true,
-                    datos: characters
-                })
+        if (!personaje) {
+            const notFoundResponse: APIResponse<null> = {
+                exito: false,
+                error: 'Personaje no encontrado'
             };
-        }
-
-        const character = await dynamoDb.getCharacter(id);
-        if (!character) {
             return {
                 statusCode: 404,
-                body: JSON.stringify({
-                    exito: false,
-                    error: 'Personaje no encontrado'
-                })
+                body: JSON.stringify(notFoundResponse)
             };
         }
+
+        const response: APIResponse<typeof personaje> = {
+            exito: true,
+            datos: personaje
+        };
 
         return {
             statusCode: 200,
-            body: JSON.stringify({
-                exito: true,
-                datos: character
-            })
+            body: JSON.stringify(response)
         };
     } catch (error) {
+        const errorResponse: APIResponse<null> = {
+            exito: false,
+            error: 'Error al obtener el personaje'
+        };
+
         return {
             statusCode: 500,
-            body: JSON.stringify({
-                exito: false,
-                error: 'Error al obtener el personaje'
-            })
+            body: JSON.stringify(errorResponse)
         };
     }
 };

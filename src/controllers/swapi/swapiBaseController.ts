@@ -1,5 +1,5 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
-import { BaseService } from '../services/swapi/baseService';
+import { BaseService } from '../../services/swapi/baseService';
 
 export abstract class BaseController {
     constructor(protected readonly service: BaseService) { }
