@@ -20,7 +20,8 @@ export class CharacterTranslator extends BaseTranslator<Character, Personaje> {
             vehiculos: character.vehicles,
             navesEstelares: character.starships,
             creado: character.created,
-            editado: character.edited
+            editado: character.edited,
+            url: character.url
         };
     }
 
@@ -41,7 +42,8 @@ export class CharacterTranslator extends BaseTranslator<Character, Personaje> {
             vehicles: personaje.vehiculos,
             starships: personaje.navesEstelares,
             created: personaje.creado,
-            edited: personaje.editado
+            edited: personaje.editado,
+            url: personaje.url
         };
     }
 }

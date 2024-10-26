@@ -6,20 +6,17 @@ provider:
   region: us-east-1
   environment:
     SWAPI_BASE_URL: https://swapi.py4e.com/api
-    TABLE_NAME: ${self:service}-${opt:stage, self:provider.stage}
+    TABLE_NAME: swapi-characters
     STAGE: ${opt:stage, self:provider.stage}
-    REGION: ${opt:region, self:provider.region}
+    REGION: us-east-1
     API_VERSION: v1
     CORS_ORIGIN: "*"
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - dynamodb:PutItem
-        - dynamodb:GetItem
-        - dynamodb:Scan
-        - dynamodb:Query
+        - dynamodb:*
       Resource:
-        - arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.TABLE_NAME}
+        - arn:aws:dynamodb:us-east-1:588738579676:table/swapi-characters
 
 functions:
   createCharacter:

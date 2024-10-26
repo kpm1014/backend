@@ -13,8 +13,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         const updatedPersonaje = await characterService.updateCharacter(id!, updateData);
 
         const response: APIResponse<typeof updatedPersonaje> = {
-            exito: true,
-            datos: updatedPersonaje
+            success: true,
+            data: updatedPersonaje
         };
 
         return {
@@ -22,8 +22,9 @@ export const handler: APIGatewayProxyHandler = async (event) => {
             body: JSON.stringify(response)
         };
     } catch (error) {
+        console.log('error>', error)
         const errorResponse: APIResponse<null> = {
-            exito: false,
+            success: false,
             error: 'Error al actualizar el personaje'
         };
 

@@ -7,12 +7,12 @@ const characterService = new CharacterService();
 
 export const handler: APIGatewayProxyHandler = async (event) => {
     try {
-        const personajeInput: PersonajeInput = JSON.parse(event.body ?? '{}');
-        const newPersonaje = await characterService.createCharacter(personajeInput);
+        const characterInput: PersonajeInput = JSON.parse(event.body ?? '{}');
+        const newCharacter = await characterService.createCharacter(characterInput);
 
-        const response: APIResponse<typeof newPersonaje> = {
-            exito: true,
-            datos: newPersonaje
+        const response: APIResponse<typeof newCharacter> = {
+            success: true,
+            data: newCharacter
         };
 
         return {
@@ -20,8 +20,9 @@ export const handler: APIGatewayProxyHandler = async (event) => {
             body: JSON.stringify(response)
         };
     } catch (error) {
+        console.log('error', error)
         const errorResponse: APIResponse<null> = {
-            exito: false,
+            success: false,
             error: 'Error al crear el personaje'
         };
 

@@ -11,7 +11,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
         if (!personaje) {
             const notFoundResponse: APIResponse<null> = {
-                exito: false,
+                success: false,
                 error: 'Personaje no encontrado'
             };
             return {
@@ -21,8 +21,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         }
 
         const response: APIResponse<typeof personaje> = {
-            exito: true,
-            datos: personaje
+            success: true,
+            data: personaje
         };
 
         return {
@@ -30,8 +30,10 @@ export const handler: APIGatewayProxyHandler = async (event) => {
             body: JSON.stringify(response)
         };
     } catch (error) {
+        console.log('error', error)
+
         const errorResponse: APIResponse<null> = {
-            exito: false,
+            success: false,
             error: 'Error al obtener el personaje'
         };
 

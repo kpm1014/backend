@@ -15,6 +15,7 @@ export interface Character {
     starships: string[];
     created: string;
     edited: string;
+    url: string;
 }
 
 

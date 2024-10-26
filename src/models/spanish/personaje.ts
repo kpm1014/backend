@@ -15,6 +15,7 @@ export interface Personaje {
     navesEstelares: string[];
     creado: string;
     editado: string;
+    url: string;
 }
 
 export interface PersonajeInput extends Omit<Personaje, 'id' | 'creado' | 'actualizado'> { }

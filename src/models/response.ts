@@ -1,8 +1,8 @@
 export interface APIResponse<T> {
-    exito: boolean;
-    datos?: T;
+    success: boolean;
+    data?: T;
     error?: string;
-    mensaje?: string;
+    message?: string;
 }
 
 export interface PaginatedResponse<T> {

@@ -10,8 +10,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         await characterService.deleteCharacter(id!);
 
         const response: APIResponse<{ mensaje: string }> = {
-            exito: true,
-            mensaje: 'Personaje eliminado exitosamente'
+            success: true,
+            message: 'Personaje eliminado exitosamente'
         };
 
         return {
@@ -19,8 +19,10 @@ export const handler: APIGatewayProxyHandler = async (event) => {
             body: JSON.stringify(response)
         };
     } catch (error) {
+        console.log('error', error)
+
         const errorResponse: APIResponse<null> = {
-            exito: false,
+            success: false,
             error: 'Error al eliminar el personaje'
         };
 
