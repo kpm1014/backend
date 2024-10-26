@@ -34,8 +34,8 @@ describe('BaseController', () => {
         const result = await controller.getAll();
         expect(result.statusCode).toBe(200);
         expect(JSON.parse(result.body)).toEqual({
-            exito: true,
-            datos: mockData
+            success: true,
+            data: mockData
         });
     });
 });

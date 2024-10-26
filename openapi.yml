@@ -1,0 +1,866 @@
+openapi: 3.0.0
+info:
+  title: SWAPI Characters API
+  version: v1
+  description: Star Wars Characters API with CRUD operations
+
+paths:
+  /api/characters:
+    post:
+      summary: Create a new character
+      tags:
+        - Characters
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CharacterInput'
+      responses:
+        '200':
+          description: Character created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+    get:
+      summary: Get all characters
+      tags:
+        - Characters
+      responses:
+        '200':
+          description: List of all characters
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Character'
+
+  /api/characters/{id}:
+    get:
+      summary: Get character by ID
+      tags:
+        - Characters
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Character found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Character'
+        '404':
+          description: Character not found
+    
+    put:
+      summary: Update character by ID
+      tags:
+        - Characters
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CharacterUpdate'
+      responses:
+        '200':
+          description: Character updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Character'
+    
+    delete:
+      summary: Delete character by ID
+      tags:
+        - Characters
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Character deleted successfully
+
+  /api/people:
+    get:
+      summary: Get all people
+      tags:
+        - People
+      responses:
+        '200':
+          description: List of all people
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Person'
+
+  /api/people/{id}:
+    get:
+      summary: Get person by ID
+      tags:
+        - People
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Person found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+
+  /api/people/search:
+    get:
+      summary: Search people
+      tags:
+        - People
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Person'
+
+  /api/people/schema:
+    get:
+      summary: Get people schema
+      tags:
+        - People
+      responses:
+        '200':
+          description: People schema
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /api/species:
+    get:
+      summary: Get all species
+      tags:
+        - Species
+      responses:
+        '200':
+          description: List of all species
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Species'
+
+  /api/species/{id}:
+    get:
+      summary: Get species by ID
+      tags:
+        - Species
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Species found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Species'
+
+  /api/species/search:
+    get:
+      summary: Search species
+      tags:
+        - Species
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results for species
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Species'
+
+  /api/species/schema:
+    get:
+      summary: Get species schema
+      tags:
+        - Species
+      responses:
+        '200':
+          description: Species schema
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /api/planets:
+    get:
+      summary: Get all planets
+      tags:
+        - Planets
+      responses:
+        '200':
+          description: List of all planets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Planet'
+
+  /api/planets/{id}:
+    get:
+      summary: Get planet by ID
+      tags:
+        - Planets
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Planet found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Planet'
+
+  /api/planets/search:
+    get:
+      summary: Search planets
+      tags:
+        - Planets
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results for planets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Planet'
+
+  /api/planets/schema:
+    get:
+      summary: Get planets schema
+      tags:
+        - Planets
+      responses:
+        '200':
+          description: Planets schema
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /api/starships:
+    get:
+      summary: Get all starships
+      tags:
+        - Starships
+      responses:
+        '200':
+          description: List of all starships
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Starship'
+
+  /api/starships/{id}:
+    get:
+      summary: Get starship by ID
+      tags:
+        - Starships
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Starship found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Starship'
+
+  /api/starships/search:
+    get:
+      summary: Search starships
+      tags:
+        - Starships
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results for starships
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Starship'
+
+  /api/starships/schema:
+    get:
+      summary: Get starships schema
+      tags:
+        - Starships
+      responses:
+        '200':
+          description: Starships schema
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /api/vehicles:
+    get:
+      summary: Get all vehicles
+      tags:
+        - Vehicles
+      responses:
+        '200':
+          description: List of all vehicles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+
+  /api/vehicles/{id}:
+    get:
+      summary: Get vehicle by ID
+      tags:
+        - Vehicles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Vehicle found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+
+  /api/vehicles/search:
+    get:
+      summary: Search vehicles
+      tags:
+        - Vehicles
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results for vehicles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+
+  /api/vehicles/schema:
+    get:
+      summary: Get vehicles schema
+      tags:
+        - Vehicles
+      responses:
+        '200':
+          description: Vehicles schema
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /api/films:
+    get:
+      summary: Get all films
+      tags:
+        - Films
+      responses:
+        '200':
+          description: List of all films
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Film'
+
+  /api/films/{id}:
+    get:
+      summary: Get film by ID
+      tags:
+        - Films
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Film found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
+
+  /api/films/search:
+    get:
+      summary: Search films
+      tags:
+        - Films
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results for films
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Film'
+
+  /api/films/schema:
+    get:
+      summary: Get films schema
+      tags:
+        - Films
+      responses:
+        '200':
+          description: Films schema
+          content:
+            application/json:
+              schema:
+                type: object
+
+components:
+  schemas:
+    Character:
+      type: object
+      properties:
+        id:
+          type: string
+        nombre:
+          type: string
+        altura:
+          type: string
+        masa:
+          type: string
+        color_pelo:
+          type: string
+        color_piel:
+          type: string
+        color_ojos:
+          type: string
+        anio_nacimiento:
+          type: string
+        genero:
+          type: string
+        mundo_natal:
+          type: string
+        peliculas:
+          type: array
+          items:
+            type: string
+        especies:
+          type: array
+          items:
+            type: string
+        vehiculos:
+          type: array
+          items:
+            type: string
+        naves_estelares:
+          type: array
+          items:
+            type: string
+        creado:
+          type: string
+          format: date-time
+        editado:
+          type: string
+          format: date-time
+        url:
+          type: string
+
+    CharacterInput:
+      type: object
+      required:
+        - nombre
+      properties:
+        nombre:
+          type: string
+        altura:
+          type: string
+        masa:
+          type: string
+        color_pelo:
+          type: string
+        color_piel:
+          type: string
+        color_ojos:
+          type: string
+        anio_nacimiento:
+          type: string
+        genero:
+          type: string
+        mundo_natal:
+          type: string
+        peliculas:
+          type: array
+          items:
+            type: string
+        especies:
+          type: array
+          items:
+            type: string
+        vehiculos:
+          type: array
+          items:
+            type: string
+        naves_estelares:
+          type: array
+          items:
+            type: string
+
+    CharacterUpdate:
+      type: object
+      properties:
+        nombre:
+          type: string
+        altura:
+          type: string
+        masa:
+          type: string
+        color_pelo:
+          type: string
+        color_piel:
+          type: string
+        color_ojos:
+          type: string
+        anio_nacimiento:
+          type: string
+        genero:
+          type: string
+        mundo_natal:
+          type: string
+        peliculas:
+          type: array
+          items:
+            type: string
+        especies:
+          type: array
+          items:
+            type: string
+        vehiculos:
+          type: array
+          items:
+            type: string
+        naves_estelares:
+          type: array
+          items:
+            type: string
+
+    Person:
+      type: object
+      properties:
+        name:
+          type: string
+        height:
+          type: string
+        mass:
+          type: string
+        hair_color:
+          type: string
+        skin_color:
+          type: string
+        eye_color:
+          type: string
+        birth_year:
+          type: string
+        gender:
+          type: string
+        homeworld:
+          type: string
+        films:
+          type: array
+          items:
+            type: string
+        species:
+          type: array
+          items:
+            type: string
+        vehicles:
+          type: array
+          items:
+            type: string
+        starships:
+          type: array
+          items:
+            type: string
+        url:
+          type: string
+
+    Species:
+      type: object
+      properties:
+        name:
+          type: string
+        classification:
+          type: string
+        designation:
+          type: string
+        average_height:
+          type: string
+        skin_colors:
+          type: string
+        hair_colors:
+          type: string
+        eye_colors:
+          type: string
+        average_lifespan:
+          type: string
+        homeworld:
+          type: string
+        language:
+          type: string
+        people:
+          type: array
+          items:
+            type: string
+        films:
+          type: array
+          items:
+            type: string
+        url:
+          type: string
+
+    Planet:
+      type: object
+      properties:
+        name:
+          type: string
+        rotation_period:
+          type: string
+        orbital_period:
+          type: string
+        diameter:
+          type: string
+        climate:
+          type: string
+        gravity:
+          type: string
+        terrain:
+          type: string
+        surface_water:
+          type: string
+        population:
+          type: string
+        residents:
+          type: array
+          items:
+            type: string
+        films:
+          type: array
+          items:
+            type: string
+        url:
+          type: string
+
+    Starship:
+      type: object
+      properties:
+        name:
+          type: string
+        model:
+          type: string
+        manufacturer:
+          type: string
+        cost_in_credits:
+          type: string
+        length:
+          type: string
+        max_atmosphering_speed:
+          type: string
+        crew:
+          type: string
+        passengers:
+          type: string
+        cargo_capacity:
+          type: string
+        consumables:
+          type: string
+        hyperdrive_rating:
+          type: string
+        MGLT:
+          type: string
+        starship_class:
+          type: string
+        pilots:
+          type: array
+          items:
+            type: string
+        films:
+          type: array
+          items:
+            type: string
+        url:
+          type: string
+
+    Vehicle:
+      type: object
+      properties:
+        name:
+          type: string
+        model:
+          type: string
+        manufacturer:
+          type: string
+        cost_in_credits:
+          type: string
+        length:
+          type: string
+        max_atmosphering_speed:
+          type: string
+        crew:
+          type: string
+        passengers:
+          type: string
+        cargo_capacity:
+          type: string
+        consumables:
+          type: string
+        vehicle_class:
+          type: string
+        pilots:
+          type: array
+          items:
+            type: string
+        films:
+          type: array
+          items:
+            type: string
+        url:
+          type: string
+
+    Film:
+      type: object
+      properties:
+        title:
+          type: string
+        episode_id:
+          type: integer
+        opening_crawl:
+          type: string
+        director:
+          type: string
+        producer:
+          type: string
+        release_date:
+          type: string
+          format: date
+        characters:
+          type: array
+          items:
+            type: string
+        planets:
+          type: array
+          items:
+            type: string
+        starships:
+          type: array
+          items:
+            type: string
+        vehicles:
+          type: array
+          items:
+            type: string
+        species:
+          type: array
+          items:
+            type: string
+        url:
+          type: string
+
+    APIResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        error:
+          type: string
+        message:
+          type: string

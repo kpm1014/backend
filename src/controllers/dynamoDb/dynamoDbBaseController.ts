@@ -59,8 +59,8 @@ export abstract class BaseDynamoDbController<T extends { id: string }> {
         return {
             statusCode,
             body: JSON.stringify({
-                exito: true,
-                datos: data
+                success: true,
+                data: data
             })
         };
     }
@@ -69,7 +69,7 @@ export abstract class BaseDynamoDbController<T extends { id: string }> {
         return {
             statusCode,
             body: JSON.stringify({
-                exito: false,
+                success: false,
                 error: error.message
             })
         };

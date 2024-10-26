@@ -7,7 +7,7 @@ provider:
   environment:
     SWAPI_BASE_URL: https://swapi.py4e.com/api
     TABLE_NAME: swapi-characters
-    STAGE: ${opt:stage, self:provider.stage}
+    STAGE: ${opt:stage, 'dev'}
     REGION: us-east-1
     API_VERSION: v1
     CORS_ORIGIN: "*"
@@ -289,7 +289,15 @@ resources:
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
 
+custom:
+  documentation:
+    version: '1.0.0'
+    title: 'SWAPI API Documentation'
+    description: 'Star Wars API and CRUD operations in DynamoDB'
+    models: ${file(openapi.yml)}
+    apiType: http
+
 plugins:
   - serverless-plugin-typescript
   - serverless-offline
-  - serverless-openapi-documentation
+  - serverless-auto-swagger

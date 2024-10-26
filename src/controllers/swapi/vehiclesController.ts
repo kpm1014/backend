@@ -2,7 +2,8 @@ import { BaseController } from './swapiBaseController';
 import { SwapiVehicleService } from '../../services/swapi/swapiVehicleService';
 
 export class VehiclesController extends BaseController {
-    constructor() {
-        super(new SwapiVehicleService());
+    constructor(language?: string) {
+        const useTranslation = language === 'es';
+        super(new SwapiVehicleService(useTranslation));
     }
 }

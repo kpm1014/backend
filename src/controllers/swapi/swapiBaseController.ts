@@ -4,27 +4,30 @@ import { BaseService } from '../../services/swapi/baseService';
 export abstract class BaseController {
     constructor(protected readonly service: BaseService) { }
 
-    async getAll(page?: string): Promise<APIGatewayProxyResult> {
+    async getAll(page?: string, lang?: string): Promise<APIGatewayProxyResult> {
         try {
-            const data = await this.service.getAll(page ? parseInt(page) : 1);
+            const useTranslation = lang === 'es';
+            const data = await this.service.getAll(page ? parseInt(page) : 1, useTranslation);
             return this.success(data);
         } catch (error) {
             return this.error(error);
         }
     }
 
-    async getById(id: string): Promise<APIGatewayProxyResult> {
+    async getById(id: string, lang?: string): Promise<APIGatewayProxyResult> {
         try {
-            const data = await this.service.getById(id);
+            const useTranslation = lang === 'es';
+            const data = await this.service.getById(id, useTranslation);
             return this.success(data);
         } catch (error) {
             return this.error(error);
         }
     }
 
-    async search(query: string): Promise<APIGatewayProxyResult> {
+    async search(query: string, lang?: string): Promise<APIGatewayProxyResult> {
         try {
-            const data = await this.service.search(query);
+            const useTranslation = lang === 'es';
+            const data = await this.service.search(query, useTranslation);
             return this.success(data);
         } catch (error) {
             return this.error(error);
@@ -44,8 +47,8 @@ export abstract class BaseController {
         return {
             statusCode: 200,
             body: JSON.stringify({
-                exito: true,
-                datos: data
+                success: true,
+                data: data
             })
         };
     }
@@ -54,7 +57,7 @@ export abstract class BaseController {
         return {
             statusCode: error.statusCode ?? 500,
             body: JSON.stringify({
-                exito: false,
+                success: false,
                 error: error.message
             })
         };

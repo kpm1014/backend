@@ -21,23 +21,23 @@ export abstract class BaseService {
         };
     }
 
-    async getAll<T, U = T>(page: number = 1): Promise<PaginatedResponse<T> | TranslatedPaginatedResponse<U>> {
+    async getAll<T, U = T>(page: number = 1, useTranslation?: boolean): Promise<PaginatedResponse<T> | TranslatedPaginatedResponse<U>> {
         const response = await this.fetchData<PaginatedResponse<T>>(`${this.baseUrl}/?page=${page}`);
-        return this.translator
+        return (useTranslation || this.translator)
             ? this.translatePaginatedResponse<T, U>(response)
             : response;
     }
 
-    async getById<T, U = T>(id: string): Promise<U> {
+    async getById<T, U = T>(id: string, useTranslation?: boolean): Promise<U> {
         const response = await this.fetchData<T>(`${this.baseUrl}/${id}`);
-        return this.translator
-            ? this.translator.toSpanish(response)
+        return (useTranslation || this.translator)
+            ? this.translator?.toSpanish(response)
             : response as unknown as U;
     }
 
-    async search<T, U = T>(query: string): Promise<PaginatedResponse<T> | TranslatedPaginatedResponse<U>> {
+    async search<T, U = T>(query: string, useTranslation?: boolean): Promise<PaginatedResponse<T> | TranslatedPaginatedResponse<U>> {
         const response = await this.fetchData<PaginatedResponse<T>>(`${this.baseUrl}/?search=${query}`);
-        return this.translator
+        return (useTranslation || this.translator)
             ? this.translatePaginatedResponse<T, U>(response)
             : response;
     }
